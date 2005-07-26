@@ -11,7 +11,7 @@
 
   <shortDescription>Gasp Core is the base framework for the Gasp project.</shortDescription>
 
-  <currentVersion>0.1</currentVersion>
+  <currentVersion>0.2-SNAPSHOT</currentVersion>
 
   <package>org.eu.gasp.core</package>
 
