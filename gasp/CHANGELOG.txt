@@ -1,0 +1,11 @@
+GASP ChangeLog
+==============
+http://gasp.berlios.de
+
+$Id$
+
+
+Changes in version 0.1 (07.25.2005)
+-----------------------------------
+
+* First public release!

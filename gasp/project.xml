@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <pomVersion>3</pomVersion>
+  <id>gasp</id>
+  <name>Gasp</name>
+  <groupId>gasp</groupId>
+
+  <currentVersion>0.1</currentVersion>
+
+  <logo>/images/gasp.png</logo>
+
+  <organization>
+    <name>Gasp team</name>
+    <url>http://developer.berlios.de/projects/gasp</url>
+    <logo>/images/berlios.png</logo>
+  </organization>
+
+  <inceptionYear>2005</inceptionYear>
+
+  <package>org.eu.gasp</package>
+
+  <developers>
+    <developer>
+      <name>Alexandre ROMAN</name>
+      <id>romale</id>
+      <email>romale@users.berlios.de</email>
+      <roles><role>Project leader</role></roles>
+    </developer>
+  </developers>
+
+  <versions>
+    <version>
+      <id>0.1</id>
+      <name>0.1</name>
+      <tag>GASP_0_1_0</tag>
+    </version>
+  </versions>
+
+  <licenses>
+    <license>
+      <name>GPL</name>
+      <url>http://www.gnu.org/licenses/gpl.txt</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <dependency>
+      <groupId>easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>1.1</version>
+      <url>http://www.easymock.org</url>
+    </dependency>
+    <dependency>
+      <groupId>emma</groupId>
+      <artifactId>emma</artifactId>
+      <version>2.0.4217</version>
+      <url>http://emma.sourceforge.net/</url>
+      <properties>
+        <eclipse.dependency>false</eclipse.dependency>
+      </properties>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <url>http://www.junit.org</url>
+      <properties>
+        <eclipse.dependency>false</eclipse.dependency>
+      </properties>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <nagEmailAddress>romale@users.berlios.de</nagEmailAddress>
+    <sourceDirectory>${maven.src.dir}/main/java</sourceDirectory>
+    <unitTestSourceDirectory>${maven.src.dir}/test/java</unitTestSourceDirectory>
+
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+        <exclude>**/Abstract*Test.java</exclude>
+      </excludes>
+    </unitTest>
+
+    <defaultGoal>jar</defaultGoal>
+
+    <resources>
+      <resource>
+        <directory>${maven.src.dir}/main/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+  </build>
+
+  <reports>
+    <report>maven-multiproject-plugin</report>
+    <report>maven-license-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-jxr-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <!--
+    <report>maven-emma-plugin</report>
+    -->
+  </reports>
+</project>
+

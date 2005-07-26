@@ -1,0 +1,23 @@
+GASP Todo list
+==============
+http://gasp.berlios.de
+
+$Id$
+
+
+Core
+----
+* Handle plugin dependencies
+* Enforce security platform
+* Add more documentation
+* Add more unit tests
+
+
+New plugins
+-----------
+* Realm service: user and role
+* DataSource service: access to JDBC DataSource
+* Platform administration service: configuration of platform and plugins through
+  several types of interface (text, html, web services...)
+* WebServer service: easy deployment of web services, WAR files
+  and static sites

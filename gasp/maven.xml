@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project xmlns:j="jelly:core" xmlns:util="jelly:util"
+  xmlns:ant="jelly:ant" xmlns:maven="jelly:maven" default="jar">
+
+
+<!-- we set a ${rootdir} variable in order to specify resources against
+the root directory -->
+
+<j:set var="rootdir">${basedir}</j:set>
+
+<j:while test="${true}">
+  <util:available file="${rootdir}/LICENSE.txt">
+    <j:break/>
+  </util:available>
+  <j:set var="rootdir">${rootdir}/..</j:set>
+</j:while>
+
+<ant:dirname ant:property="rootdirname" file="${rootdir}/project.xml"/>
+<j:set var="rootdir">${rootdirname}</j:set>
+<echo>Using root dir: ${rootdir}</echo>
+
+
+<!-- NEO PROJECT GOALS -->
+
+
+<goal name="gasp:clean" prereqs="clean:clean,multiproject:clean"/>
+
+
+<goal name="gasp:src" prereqs="dist:build-src"/>
+
+
+<goal name="gasp:minidist">
+  <maven:maven descriptor="${rootdir}/bootstrap/project.xml" goals="jar"/>
+  <maven:maven descriptor="${rootdir}/core/project.xml" goals="jar"/>
+  <maven:reactor basedir="${maven.multiproject.basedir}" includes="plugins/*/project.xml" goals="jar"/>
+  <ant:copy todir="${maven.build.dir}/minidist/plugins" flatten="true">
+    <ant:fileset dir="${rootdir}/plugins/">
+      <ant:include name="**/target/*.jar"/>
+    </ant:fileset>
+  </ant:copy>
+  <ant:copy todir="${maven.build.dir}/minidist/bin" flatten="true">
+    <ant:fileset dir="${rootdir}/bootstrap/target">
+      <ant:include name="*.jar"/>
+    </ant:fileset>
+    <ant:fileset dir="${maven.src.dir}/bin">
+      <ant:include name="**/*"/>
+    </ant:fileset>
+  </ant:copy>
+  <ant:copy todir="${maven.build.dir}/minidist/conf" flatten="true">
+    <ant:fileset dir="${maven.conf.dir}">
+      <ant:include name="**/*"/>
+    </ant:fileset>
+  </ant:copy>
+  <ant:copy todir="${maven.build.dir}/minidist/lib" flatten="true">
+    <ant:fileset dir="${rootdir}/core/target">
+      <ant:include name="*.jar"/>
+    </ant:fileset>
+  </ant:copy>
+
+  <ant:copy todir="${maven.build.dir}/minidist">
+    <ant:fileset dir="${rootdir}">
+      <ant:include name="LICENSE.txt"/>
+      <ant:include name="NOTICE.txt"/>
+    </ant:fileset>
+  </ant:copy>
+
+  <ant:chmod file="${maven.build.dir}/minidist/bin/gasp" perm="a+x"/>
+
+  <maven:pom projectDescriptor="${rootdir}/core/project.xml" var="corePom"/>
+  <j:forEach var="dep" items="${corePom.dependencies}">
+    <ant:copy file="${corePom.getDependencyPath(dep.getId())}" todir="${maven.build.dir}/minidist/lib" flatten="true"/>
+  </j:forEach>
+</goal>
+
+
+<goal name="gasp:site" prereqs="multiproject:site,site"/>
+
+
+<goal name="gasp:src" prereqs="dist:build-src"/>
+
+
+<goal name="gasp:dist" prereqs="gasp:minidist">
+  <ant:mkdir dir="${maven.build.dir}/distributions"/>
+  <ant:zip destfile="${maven.build.dir}/distributions/${pom.artifactId}-${pom.currentVersion}.zip">
+    <ant:zipfileset dir="${maven.build.dir}/minidist" prefix="${pom.artifactId}">
+      <ant:exclude name="logs/**"/>
+    </ant:zipfileset>
+  </ant:zip>
+  <ant:tar destfile="${maven.build.dir}/distributions/${pom.artifactId}-${pom.currentVersion}.tar.gz"
+        compression="gzip">
+    <ant:tarfileset dir="${maven.build.dir}/minidist" prefix="${pom.artifactId}" mode="755">
+      <ant:include name="bin/gasp"/>
+    </ant:tarfileset>
+    <ant:tarfileset dir="${maven.build.dir}/minidist" prefix="${pom.artifactId}">
+      <ant:exclude name="bin/gasp"/>
+      <ant:exclude name="logs/**"/>
+    </ant:tarfileset>
+  </ant:tar>
+</goal>
+
+
+<goal name="gasp:eclipse">
+  <j:set var="goal" value="eclipse"/>
+  <attainGoal name="multiproject:goal"/>
+</goal>
+
+
+<goal name="gasp:fixcrlf">
+  <ant:fixcrlf eol="unix" eof="remove" fixlast="true" srcdir="${rootdir}"
+               includes="**/*.java **/*.properties **/*.xml **/*.txt"/>
+</goal>
+
+
+<!-- INTERNAL GOALS -->
+
+
+<postGoal name="clean:clean">
+  <ant:delete>
+    <ant:fileset dir="${basedir}">
+      <ant:include name="project.xml.md5"/>
+      <ant:include name="*snapshot-version"/>
+      <ant:include name="bin"/>
+      <ant:include name=".classpath"/>
+      <ant:include name=".project"/>
+      <ant:include name="**/jcoverage.ser"/>
+      <ant:include name="build.xml"/>
+      <ant:include name="**/*.*~"/>
+      <ant:include name="**/*.log*"/>
+      <ant:include name="**/*.class*"/>
+      <ant:include name="javadoc*"/>
+    </ant:fileset>
+  </ant:delete>
+</postGoal>
+
+
+<preGoal name="dist:build-src">
+  <ant:fileset dir="${basedir}" id="dist.src.files">
+    <ant:exclude name="**/.classpath"/>
+    <ant:exclude name="**/.project"/>
+    <ant:exclude name="**/target/**"/>
+    <ant:exclude name="**/*.swp"/>
+    <ant:exclude name="**/*.swo"/>
+    <ant:exclude name="**/*.log*"/>
+    <ant:exclude name="**/jcoverage.ser"/>
+    <ant:exclude name="**/junit*.properties"/>
+    <ant:exclude name="**/project.xml.md5"/>
+    <ant:exclude name="**/*snapshot-version"/>
+    <ant:exclude name="**/cruisecontrol.xml"/>
+    <ant:exclude name="**/cruisecontrol.txt"/>
+    <ant:exclude name="**/${maven.final.name}.ser"/>
+  </ant:fileset>
+
+  <j:set var="maven.dist.src.archive.dir" value="${maven.build.dest}"/>
+  <ant:copy todir="${maven.dist.src.archive.dir}/${maven.final.name}">
+    <ant:fileset refid="dist.src.files"/>
+  </ant:copy>
+</preGoal>
+
+
+<preGoal name="test:test-resources">
+  <util:available file="${maven.src.dir}/test/resources">
+    <ant:copy todir="${maven.test.dest}">
+      <ant:fileset dir="${maven.src.dir}/test/resources">
+        <ant:include name="**/*"/>
+      </ant:fileset>
+    </ant:copy>
+  </util:available>
+  <util:available file="${rootdir}/src/test/resources">
+    <ant:copy todir="${maven.test.dest}">
+      <ant:fileset dir="${rootdir}/src/test/resources">
+        <ant:include name="**/*"/>
+      </ant:fileset>
+    </ant:copy>
+  </util:available>
+</preGoal>
+
+
+<goal name="jar:create-manifest">
+  <copy tofile="${maven.build.dir}/${pom.artifactId}.manifest">
+    <fileset file="${rootdir}/jar.manifest"/>
+    <filterset begintoken="@" endtoken="@">
+      <filter token="specification.title" value="${pom.name}"/>
+      <filter token="specification.version" value="${pom.currentVersion}"/>
+      <filter token="specification.vendor" value="${pom.organization.name}"/>
+      <filter token="implementation.title" value="${pom.name}"/>
+      <filter token="implementation.version" value="${pom.currentVersion}"/>
+      <filter token="implementation.vendor" value="${pom.organization.name}"/>
+      <filter token="main.class" value="${maven.jar.mainclass}"/>
+      <filter token="plugin" value="${plugin}"/>
+      <filter token="plugin.version" value="${plugin.version}"/>
+      <filter token="plugin.className" value="${plugin.className}"/>
+      <filter token="plugin.requires" value="${plugin.requires}"/>
+      <filter token="plugin.provides" value="${plugin.provides}"/>
+    </filterset>
+  </copy>
+</goal>
+
+
+<preGoal name="jar:jar">
+  <attainGoal name="jar:create-manifest"/>
+</preGoal>
+
+
+<goal name="statcvs:setup" description="install StatCVS plugin">
+  <j:set var="artifactId" value="maven-statcvs-plugin"/>
+  <j:set var="groupId" value="statcvs"/>
+  <j:set var="version" value="2.7"/>
+  <attainGoal name="plugin:download"/>
+</goal>
+
+
+<goal name="run" prereqs="java:jar-resources,java:compile" description="run the project">
+  <ant:path id="cp">
+    <ant:pathelement location="${maven.build.dest}"/>
+    <ant:path refid="maven.dependency.classpath"/>
+  </ant:path>
+  <ant:java classname="${maven.jar.mainclass}" classpathref="cp" fork="true"/>
+</goal>
+
+
+<goal name="emma:setup" description="install EMMA plugin">
+  <j:set var="artifactId" value="maven-emma-plugin"/>
+  <j:set var="groupId" value="emma"/>
+  <j:set var="version" value="0.4"/>
+  <attainGoal name="plugin:download"/>
+</goal>
+
+
+<!-- EMMA goals are taken from:
+     http://svn.apache.org/viewcvs.cgi/directory/network/trunk/maven.xml?rev=165103&view=markup -->
+
+<goal name="emma:backup-main">
+  <ant:copy todir="${maven.build.dest}.orig">
+    <ant:fileset dir="${maven.build.dest}"/>
+  </ant:copy>
+</goal>
+
+<goal name="emma:backup-test">
+  <ant:copy todir="${maven.test.dest}.orig">
+    <ant:fileset dir="${maven.test.dest}"/>
+  </ant:copy>
+</goal>
+
+
+<goal name="emma:restore-main">
+  <ant:delete dir="${maven.build.dest}.emma"/>
+  <ant:move todir="${maven.build.dest}.emma">
+    <ant:fileset dir="${maven.build.dest}" />
+  </ant:move>
+  <ant:move todir="${maven.build.dest}">
+    <ant:fileset dir="${maven.build.dest}.orig"/>
+  </ant:move>
+</goal>
+
+
+<goal name="emma:restore-test">
+  <ant:delete dir="${maven.test.dest}.emma"/>
+  <ant:move todir="${maven.test.dest}.emma">
+    <ant:fileset dir="${maven.test.dest}" />
+  </ant:move>
+  <ant:move todir="${maven.test.dest}">
+    <ant:fileset dir="${maven.test.dest}.orig"/>
+  </ant:move>
+</goal>
+
+
+<preGoal name="emma:replace-product-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:backup-main"/>
+  </j:if>
+</preGoal>
+
+
+<postGoal name="emma:replace-product-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:restore-main"/>
+  </j:if>
+</postGoal>
+
+
+<preGoal name="emma:replace-testing-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:backup-test"/>
+  </j:if>
+</preGoal>
+
+
+<postGoal name="emma:replace-testing-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:restore-test"/>
+  </j:if>
+</postGoal>
+
+
+<preGoal name="emma:realreport">
+  <attainGoal name="test:compile"/>
+  <attainGoal name="emma:backup-main"/>
+  <attainGoal name="emma:backup-test"/>
+  <echo>Turning on EMMA for report generation.</echo>
+  <j:set var="maven.emma.inreport" value="true"/>
+  <attainGoal name="emma:test-with-forced-fork"/>
+</preGoal>
+
+
+<postGoal name="emma:realreport">
+  <j:set var="maven.emma.inreport" value="false"/>
+  <echo>Turning off EMMA.</echo>
+  <attainGoal name="emma:restore-main"/>
+  <attainGoal name="emma:restore-test"/>
+</postGoal>
+
+</project>

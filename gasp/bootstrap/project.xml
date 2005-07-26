@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>gasp-bootstrap</id>
+  <name>Gasp Bootstrap</name>
+  <groupId>gasp</groupId>
+
+  <shortDescription>Gasp Bootstrap launches the Gasp project.</shortDescription>
+
+  <currentVersion>1.0</currentVersion>
+
+  <package>org.eu.gasp.bootstrap</package>
+</project>

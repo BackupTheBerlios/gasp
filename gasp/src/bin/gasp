@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# $Id$
+#
+# Gasp launcher script for Un"x-like
+# Copyright (c) 2005 Gasp team
+# Published under the terms of the GPL (see LICENSE.txt)
+#
+
+BOOTSTRAP="bin/gasp-bootstrap-1.0.jar"
+JAVA="java"
+JAVA_OPTS=""
+
+if [ -z ${GASP_HOME} ]; then
+    echo "Please set the GASP_HOME environment variable."
+    exit 3
+fi
+
+${JAVA} ${JAVA_OPTS} -Dgasp.home=${GASP_HOME} -jar ${GASP_HOME}/${BOOTSTRAP} \
+  --log4j ${GASP_HOME}/conf/log4j.unix.properties $1 $2 $3 $4 $5 $6 $7 $8 $9

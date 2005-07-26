@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Main-Class: @main.class@
+Specification-Title: @specification.title@
+Specification-Version: @specification.version@
+Specification-Vendor: @specification.vendor@
+Implementation-Title: @implementation.title@
+Implementation-Version: @implementation.version@
+Implementation-Vendor: @implementation.vendor@
+Plugin: @plugin@
+Plugin-Version: @plugin.version@
+Plugin-Class: @plugin.className@
+Plugin-Requires: @plugin.requires@
+Plugin-Provides: @plugin.provides@
+

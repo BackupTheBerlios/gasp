@@ -1,0 +1,8 @@
+# $Id$
+janel.main.class=org.eu.gasp.bootstrap.Main
+janel.min.java.version=1.5
+janel.classpath.jars.dir=${FOUND_EXE_FOLDER}
+janel.library.path.dir=${FOUND_EXE_FOLDER}
+janel.main.argument=--log4j=${FOUND_EXE_FOLDER}/../conf/log4j.windows.properties
+-Dgasp.home=${FOUND_EXE_FOLDER}\..
+

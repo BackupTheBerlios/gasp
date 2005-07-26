@@ -1,0 +1,51 @@
+// $Id$
+//
+// Gasp policy file
+// Copyright (c) 2005 Gasp team
+// Published under the terms of the GPL (see LICENSE.txt)
+//
+
+
+grant codebase "file:${gasp.home}/bin/gasp-bootstrap-1.0.jar" {
+  permission java.lang.RuntimePermission "shutdownHooks";
+  permission java.lang.RuntimePermission "getClassLoader";
+  permission java.lang.RuntimePermission "exitVM";
+  permission java.lang.RuntimePermission "createClassLoader";
+
+  permission java.util.PropertyPermission "gasp.*", "read, write";
+};
+
+
+grant codebase "file:${gasp.home}/lib/*" {
+  // permissions required by third-party libraries
+  permission java.lang.RuntimePermission "getClassLoader";
+};
+
+
+grant codebase "file:${gasp.home}/lib/gasp-core-0.1.jar" {
+  // we inherit permissions from codebase ${gasp.home}/lib/*:
+  // here we add more permissions only for gasp-core
+
+  permission java.lang.RuntimePermission "shutdownHooks";
+  permission java.lang.RuntimePermission "exitVM";
+  permission java.lang.RuntimePermission "createClassLoader";
+
+  permission java.util.PropertyPermission "gasp.*", "read, write";
+};
+
+
+grant {
+  // log permissions
+  permission java.io.FilePermission "/var/log/gasp.log", "read, write";
+  permission java.io.FilePermission "${gasp.home}${/}gasp.log", "read, write";
+
+  // needed by org.apache.commons.lang.builder.*
+  permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+  permission java.lang.RuntimePermission "accessDeclaredMembers";
+
+  // all files can be read under ${gasp.home}
+  permission java.io.FilePermission "${gasp.home}${/}-", "read";
+
+  // we allow everyone to read all system properties (is it dangerous?)
+  permission java.util.PropertyPermission "*", "read";
+};

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>gasp-hellouser</id>
+  <name>Gasp HelloUser</name>
+  <groupId>gasp</groupId>
+
+  <shortDescription>Gasp HelloUser displays "Hello 'user'" in the log based on
+    the user name, using the HelloWorldService.</shortDescription>
+
+  <currentVersion>1.0</currentVersion>
+
+  <package>org.eu.gasp.hellouser</package>
+
+  <dependencies>
+    <dependency>
+      <groupId>gasp</groupId>
+      <artifactId>gasp-core</artifactId>
+      <version>0.1</version>
+      <url>http://gasp.berlios.de</url>
+    </dependency>
+    <dependency>
+      <groupId>gasp</groupId>
+      <artifactId>gasp-helloworld</artifactId>
+      <version>1.0</version>
+      <url>http://gasp.berlios.de</url>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+  </dependencies>
+</project>

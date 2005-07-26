@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>gasp-helloworld</id>
+  <name>Gasp HelloWorld</name>
+  <groupId>gasp</groupId>
+
+  <shortDescription>Gasp HelloWorld provides the service HelloWorldService,
+    to display "Hello world!"-like messages.</shortDescription>
+
+  <currentVersion>1.0</currentVersion>
+
+  <package>org.eu.gasp.helloworld</package>
+
+  <dependencies>
+    <dependency>
+      <groupId>gasp</groupId>
+      <artifactId>gasp-core</artifactId>
+      <version>0.1</version>
+      <url>http://gasp.berlios.de</url>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+  </dependencies>
+</project>
