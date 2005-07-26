@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>gasp-datasource</id>
+  <name>Gasp DataSource</name>
+  <groupId>gasp</groupId>
+
+  <shortDescription>Gasp DataSource provides a registry to configure and access
+    DataSource objects.</shortDescription>
+
+  <currentVersion>1.0-SNAPSHOT</currentVersion>
+
+  <package>org.eu.gasp.datasource</package>
+
+  <dependencies>
+    <dependency>
+      <groupId>gasp</groupId>
+      <artifactId>gasp-core</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://gasp.berlios.de</url>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.1</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+  </dependencies>
+</project>
