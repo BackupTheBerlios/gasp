@@ -23,10 +23,15 @@
 package org.eu.gasp.core;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+
 /**
  * Abstract implementation for plugin. Plugins should extend this class.
  */
 public abstract class AbstractPlugin implements Plugin {
+    protected final Log log = LogFactory.getLog(getClass());
     private boolean started = false;
 
 
