@@ -3,3 +3,5 @@ target
 .project
 *.log
 junit*.properties
+*.ser
+bin
