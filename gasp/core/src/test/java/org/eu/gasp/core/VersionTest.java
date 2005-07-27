@@ -84,4 +84,40 @@ public class VersionTest extends TestCase {
         assertEquals(-1, v1.compareTo(v7));
         assertEquals(1, v7.compareTo(v1));
     }
+
+
+    public void testIsCompatible() {
+        final Version v1 = new Version("1.0.1");
+        final Version v2 = new Version("1.0.2");
+        final Version v3 = new Version("2.0.1");
+
+        assertTrue(v1.isCompatible(v1));
+        assertTrue(v1.isCompatible(v2));
+        assertFalse(v1.isCompatible(v3));
+
+        assertTrue(v2.isCompatible(v2));
+        assertTrue(v2.isCompatible(v1));
+        assertFalse(v2.isCompatible(v3));
+
+        assertTrue(v3.isCompatible(v3));
+        assertFalse(v3.isCompatible(v1));
+        assertFalse(v3.isCompatible(v2));
+
+        try {
+            v1.isCompatible(null);
+            fail("Expected exception not thrown");
+        } catch (Exception e) {
+            // expected
+        }
+    }
+
+
+    public void testConstructorIntInvalidPart() {
+        try {
+            new Version(-1, 0, 0, null);
+            fail("Expected exception not thrown");
+        } catch (Exception e) {
+            // expected
+        }
+    }
 }
