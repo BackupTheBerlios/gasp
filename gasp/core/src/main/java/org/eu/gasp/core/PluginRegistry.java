@@ -33,7 +33,7 @@ import java.net.URL;
 public interface PluginRegistry {
     /**
      * Installs a plugin specified by an <tt>URL</tt>. Implementations must
-     * implement at leat the "file" protocol. Other protocol may be provided
+     * implement at least the "file" protocol. Other protocols may be provided
      * (such as "http" or "ftp").
      * 
      * @param url address of a plugin to install
