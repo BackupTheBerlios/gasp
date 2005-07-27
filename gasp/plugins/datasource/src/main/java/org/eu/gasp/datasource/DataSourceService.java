@@ -102,7 +102,11 @@ public class DataSourceService {
 
 
     /**
-     * Unregisters
+     * Unregisters the <tt>DataSource</tt> specified by <tt>id</tt>. Then,
+     * the <tt>DataSource</tt> will not be available through the
+     * <tt>lookup(String id)</tt> method.
+     * 
+     * @param id <tt>DataSource</tt> id
      */
     public void unregister(String id) {
         dataSourceCache.remove(id);
