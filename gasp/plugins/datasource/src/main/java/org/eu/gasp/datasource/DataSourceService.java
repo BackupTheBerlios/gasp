@@ -33,6 +33,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
+/**
+ * Service for getting <tt>DataSource</tt> objects.
+ */
 public class DataSourceService {
     private final Log log = LogFactory.getLog(getClass());
     private final Map<String, DataSource> dataSourceCache = new WeakHashMap<String, DataSource>(
@@ -47,11 +50,20 @@ public class DataSourceService {
     }
 
 
+    /**
+     * Returns a registered <tt>DataSource</tt>. The <tt>DataSource</tt> is
+     * created the first time it is accessed. A <tt>RuntimeException</tt> may
+     * be thrown if the <tt>DataSource</tt> couldn't be created.
+     * 
+     * @param id <tt>DataSource</tt> id to lookup
+     * @return a <tt>DataSource</tt> registered under the key <tt>id</tt>
+     */
     public DataSource lookup(String id) {
         if (id == null) {
             throw new NullPointerException("id");
         }
 
+        // getting a DataSource form the cache
         DataSource ds = dataSourceCache.get(id);
         if (ds == null) {
             // no DataSource available: creating new one
@@ -62,6 +74,7 @@ public class DataSourceService {
                         "DataSource id not registered: " + id);
             }
             ds = createDataSource(desc);
+            assert ds != null : "DataSource is null";
             // putting the newly DataSource in the cache for future use
             dataSourceCache.put(id, ds);
         }
@@ -70,6 +83,12 @@ public class DataSourceService {
     }
 
 
+    /**
+     * Registers a <tt>DataSource</tt>. The <tt>DataSource</tt> will then
+     * be available through the <tt>lookup(String id)</tt> method.
+     * 
+     * @param desc information for creating the <tt>DataSource</tt>
+     */
     public void register(DataSourceDescriptor desc) {
         if (desc == null) {
             throw new NullPointerException("desc");
@@ -82,6 +101,9 @@ public class DataSourceService {
     }
 
 
+    /**
+     * Unregisters
+     */
     public void unregister(String id) {
         dataSourceCache.remove(id);
         dataSourceDescriptorCache.remove(id);
@@ -97,7 +119,13 @@ public class DataSourceService {
             log.info("Creating new DataSource: " + desc);
         }
 
-        return dataSourceFactory.create(desc);
+        final DataSource ds = dataSourceFactory.create(desc);
+        if (ds == null) {
+            throw new NullPointerException(
+                    "DataSourceFactory returned a null DataSource");
+        }
+
+        return ds;
     }
 
 
