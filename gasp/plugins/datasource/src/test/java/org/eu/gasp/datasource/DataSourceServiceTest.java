@@ -46,4 +46,15 @@ public class DataSourceServiceTest extends TestCase {
             // expected
         }
     }
+    
+    
+    public void testLookupNullId() {
+        final DataSourceService dss = new DataSourceService();
+        try {
+            dss.lookup(null);
+            fail("Expected exception was not thrown");
+        } catch(Exception e) {
+            // expected
+        }
+    }
 }
