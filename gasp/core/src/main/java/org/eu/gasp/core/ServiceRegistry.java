@@ -44,7 +44,7 @@ public interface ServiceRegistry {
      * <tt>lookup(String)</tt> by using <tt>clazz.getName()</tt> as the
      * service id.
      * 
-     * @param id service class
+     * @param clazz service class
      * @return a registered service
      * @throws GaspException service not found
      */
@@ -67,7 +67,7 @@ public interface ServiceRegistry {
      * one replaces it. This method delegates to <tt>register(String)</tt> by
      * using <tt>clazz.getName()</tt> as the service id.
      * 
-     * @param id service id
+     * @param clazz service class
      * @param service service implementation
      * @throws GaspException error while registering the service
      */
