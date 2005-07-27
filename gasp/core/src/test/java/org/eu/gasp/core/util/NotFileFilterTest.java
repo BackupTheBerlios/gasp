@@ -45,4 +45,14 @@ public class NotFileFilterTest extends TestCase {
 
         control.verify();
     }
+
+
+    public void testContructorNullFilters() {
+        try {
+            new NotFileFilter(null);
+            fail("Expected exception not thrown");
+        } catch (Exception e) {
+            // expected
+        }
+    }
 }
