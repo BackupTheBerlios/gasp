@@ -109,7 +109,7 @@ the root directory -->
 
 
 <goal name="gasp:fixcrlf">
-  <ant:fixcrlf eol="unix" eof="remove" fixlast="true" srcdir="${rootdir}"
+  <ant:fixcrlf eol="windows" eof="remove" fixlast="true" srcdir="${rootdir}"
                includes="**/*.java **/*.properties **/*.xml **/*.txt"/>
 </goal>
 
