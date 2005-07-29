@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>gasp-ant</id>
+  <name>Gasp Ant</name>
+  <groupId>gasp</groupId>
+
+  <shortDescription>Gasp Ant enables to build Gasp plugins within Ant
+    projects.</shortDescription>
+
+  <currentVersion>1.0-SNAPSHOT</currentVersion>
+
+  <package>org.eu.gasp.ant</package>
+
+  <dependencies>
+    <dependency>
+      <groupId>ant</groupId>
+      <artifactId>ant</artifactId>
+      <version>1.6.5</version>
+      <url>http://ant.apache.org</url>
+    </dependency>
+  </dependencies>
+</project>

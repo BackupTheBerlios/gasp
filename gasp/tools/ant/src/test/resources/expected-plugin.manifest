@@ -1,0 +1,3 @@
+Plugin: org.eu.gasp.test
+Plugin-Version: 1.0
+Plugin-Class: org.eu.gasp.test.Plugin
