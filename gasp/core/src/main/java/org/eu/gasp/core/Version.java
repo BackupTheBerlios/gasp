@@ -23,6 +23,7 @@
 package org.eu.gasp.core;
 
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * <li>2.5.1-r6</li>
  * </ul>
  */
-public class Version implements Comparable<Version> {
+public class Version implements Comparable<Version>, Serializable {
     private static final Pattern PATTERN = Pattern
             .compile("(\\d)+(\\.(\\d)+(\\.(\\d)+)?(\\-(.*))?)?");
     private final int major;
