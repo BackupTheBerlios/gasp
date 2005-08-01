@@ -28,7 +28,7 @@ package org.eu.gasp.core;
  * errors, and ease the resolution of a problem. If no error code is specified,
  * the code is set to the constant <tt>UNKNOWN_CODE</tt>.
  */
-public class GaspException extends Exception {
+public class GaspException extends RuntimeException {
     public static final int UNKNOWN_CODE = 0;
     private final int code;
 
