@@ -200,6 +200,11 @@ the root directory -->
 </goal>
 
 
+<preGoal name="jar:jar">
+  <attainGoal name="jar:create-manifest"/>
+</preGoal>
+
+
 <goal name="statcvs:setup" description="install StatCVS plugin">
   <j:set var="artifactId" value="maven-statcvs-plugin"/>
   <j:set var="groupId" value="statcvs"/>
