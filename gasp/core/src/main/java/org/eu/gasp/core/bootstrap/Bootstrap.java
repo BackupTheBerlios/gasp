@@ -150,7 +150,7 @@ public final class Bootstrap {
         final String version = pkg.getSpecificationVersion();
         if (!StringUtils.isBlank(title) && !StringUtils.isBlank(version)) {
             // print version in the log
-            log.info("Using: " + title + "-" + version);
+            log.info("Using: " + title + " " + version);
         }
 
         final PluginRegistry pluginRegistry = PluginManager.instance()
