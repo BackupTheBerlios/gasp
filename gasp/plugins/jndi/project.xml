@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>gasp-jndi</id>
+  <name>Gasp JNDI</name>
+  <groupId>gasp</groupId>
+
+  <shortDescription>Gasp JNDI provides a service to bind JNDI resources.</shortDescription>
+
+  <currentVersion>1.0-SNAPSHOT</currentVersion>
+
+  <package>org.eu.gasp.jndi</package>
+
+  <dependencies>
+    <dependency>
+      <groupId>gasp</groupId>
+      <artifactId>gasp-core</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://gasp.berlios.de</url>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.1</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+    <dependency>
+      <groupId>jetty</groupId>
+      <artifactId>org.mortbay.jetty.plus</artifactId>
+      <version>5.1.4</version>
+      <url>http://jetty.mortbay.org</url>
+    </dependency>
+  </dependencies>
+</project>
