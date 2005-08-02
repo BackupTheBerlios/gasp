@@ -105,19 +105,72 @@ public class VersionTest extends TestCase {
 
         try {
             v1.isCompatible(null);
-            fail("Expected exception not thrown");
+            fail("Expected exception was not thrown");
         } catch (Exception e) {
             // expected
         }
     }
 
 
+    public void testConstructorInt() {
+        final Version version = new Version(2, 4, 3, "alpha");
+        assertEquals(2, version.getMajor());
+        assertEquals(4, version.getMinor());
+        assertEquals(3, version.getRevision());
+        assertEquals("alpha", version.getSuffix());
+    }
+
+
     public void testConstructorIntInvalidPart() {
         try {
             new Version(-1, 0, 0, null);
-            fail("Expected exception not thrown");
+            fail("Expected exception was not thrown");
         } catch (Exception e) {
             // expected
         }
+    }
+
+
+    public void testConstructorNull() {
+        try {
+            new Version(null);
+            fail("Expected exception was not thrown");
+        } catch (Exception e) {
+            // expected
+        }
+    }
+
+
+    public void testConstructorEmptyString() {
+        try {
+            new Version("");
+            fail("Expected exception was not thrown");
+        } catch (Exception e) {
+            // expected
+        }
+    }
+
+
+    public void testConstructorIncorrectVersion() {
+        try {
+            new Version("abc");
+            fail("Expected exception was not thrown");
+        } catch (Exception e) {
+            // expected
+        }
+    }
+
+
+    public void testToString() {
+        final Version version = new Version("1.0.4-r7");
+        assertEquals("1.0.4-r7", version.toString());
+    }
+
+
+    public void testEquals() {
+        final Version v1 = new Version("1.0.2");
+        final Version v2 = new Version("1.0.2");
+        assertTrue(v1.equals(v2));
+        assertTrue(v2.equals(v1));
     }
 }
